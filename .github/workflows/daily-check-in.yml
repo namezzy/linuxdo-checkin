@@ -34,14 +34,14 @@ jobs:
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: |
-          curl -s "https://bark.withlevi.top/${{ secrets.BARK_KEY }}/LINUX DO 每日签到成功完成/✅ 签到任务已完成?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png"
+          curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到成功完成/✅ 签到任务已完成?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png"
 
       - name: Send Bark Notification Failure  
         if: failure() && secrets.BARK_KEY != ''
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: |
-          curl -s "https://bark.withlevi.top/${{ secrets.BARK_KEY }}/LINUX DO 每日签到失败/❌ 签到任务失败?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png" 
+          curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到失败/❌ 签到任务失败?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png" 
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
