@@ -29,27 +29,19 @@ jobs:
         run: |
           python main.py
 
-      - name: Send Telegram Notification
+      - name: Send Bark Notification Success
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_USERID: ${{ secrets.TELEGRAM_USERID }}
-        if: ${{ success() && env.TELEGRAM_TOKEN != '' && env.TELEGRAM_USERID != '' }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        if: ${{ success() && env.BARK_KEY != '' }}
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_TOKEN }}/sendMessage" \
-          -d chat_id=${{ env.TELEGRAM_USERID }} \
-          -d parse_mode=HTML \
-          -d text="✅ <b>LINUX DO</b> 每日签到成功完成"
+          curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到成功完成/✅ 签到任务已完成?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png"
 
-      - name: Send Failure Notification
+      - name: Send Bark Notification Failure  
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_USERID: ${{ secrets.TELEGRAM_USERID }}
-        if: ${{ failure() && env.TELEGRAM_TOKEN != '' && env.TELEGRAM_USERID != '' }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        if: ${{ failure() && env.BARK_KEY != '' }}
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_TOKEN }}/sendMessage" \
-          -d chat_id=${{ env.TELEGRAM_USERID }} \
-          -d parse_mode=HTML \
-          -d text="❌ <b>LINUX DO</b> 每日签到失败"
+          curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到失败/❌ 签到任务失败?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png" 
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
