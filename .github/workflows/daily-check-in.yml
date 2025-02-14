@@ -26,20 +26,17 @@ jobs:
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
         run: |
           python main.py
 
       - name: Send Bark Notification Success
-        if: success() && secrets.BARK_KEY != ''
-        env:
-          BARK_KEY: ${{ secrets.BARK_KEY }}
+        if: success() && BARK_KEY != '' 
         run: |
           curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到成功完成/✅ 签到任务已完成?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png"
 
       - name: Send Bark Notification Failure  
-        if: failure() && secrets.BARK_KEY != ''
-        env:
-          BARK_KEY: ${{ secrets.BARK_KEY }}
+        if: failure() && BARK_KEY != ''
         run: |
           curl -s "https://bark.withlevi.top/${{ env.BARK_KEY }}/LINUX DO 每日签到失败/❌ 签到任务失败?icon=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png" 
 
